@@ -29,7 +29,7 @@ def CheckMessages():
 	for msg in r.get_unread(limit=None):
 		m = re.match(COMMENT_PATTERN, msg.body)
 		if m is not None:
-			m.mark_as_read()
+			msg.mark_as_read()
 			whole_url = m.group(0)
 			sub = m.group('subreddit')
 			if sub in ALLOWED_SUBREDDITS:

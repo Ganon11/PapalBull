@@ -5,7 +5,8 @@ import time
 
 USERNAME = "Papal_Bull"
 PASSWORD_FILEPATH = os.path.join(os.getcwd(), 'files', 'password.dat')
-COMMENT_PATTERN = re.compile(r'http://www.reddit.com/r/(?P<subreddit>\w+)/comments/\w+/\w+/\w+)', re.IGNORECASE)
+COMMENT_PATTERN = re.compile(r'^http://www.reddit.com/r/(?P<subreddit>\w+)/comments/\w+/\w+/\w+$', re.IGNORECASE)
+THREAD_PATTERN = COMMENT_PATTERN = re.compile(r'^http://www.reddit.com/r/(?P<subreddit>\w+)/comments/\w+/\w+/$', re.IGNORECASE)
 ALLOWED_SUBREDDITS = (
    'Christianity',
    'Sidehugs'
@@ -28,15 +29,18 @@ def CheckMessages():
 
    for msg in r.get_unread(limit=None):
       m = re.match(COMMENT_PATTERN, msg.body)
+      m2 = re.match(THREAD_PATTERN, msg.body)
+      msg.mark_as_read()
       if m is not None:
-         msg.mark_as_read()
          whole_url = m.group(0)
          sub = m.group('subreddit')
          if sub in ALLOWED_SUBREDDITS:
-            comment = r.get_submission(whole_url).comments[0]
-            comment.reply(PAPAL_BULL_MESSAGE)
-      else:
-         msg.mark_as_read()
+            r.get_submission(whole_url).comments[0].reply(PAPAL_BULL_MESSAGE)
+      elif m2 is not None:
+         whole_url = m2.group(0)
+         sub = m2.group('subreddit')
+         if sub in ALLOWED_SUBREDDITS:
+            r.get_submission(whole_url).add_comment(PAPAL_BULL_MESSAGE)
 
 while True:
    CheckMessages()

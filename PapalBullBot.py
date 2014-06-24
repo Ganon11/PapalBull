@@ -5,7 +5,7 @@ import time
 
 USERNAME = "Papal_Bull"
 PASSWORD_FILEPATH = os.path.join(os.getcwd(), 'files', 'password.dat')
-COMMENT_PATTERN = re.compile(r'http://www.reddit.com/r/(?P<subreddit>\w+)/comments/(?P<thread_id>\w+)/\w+/(?P<comment_id>\w+)', re.IGNORECASE)
+COMMENT_PATTERN = re.compile(r'http://www.reddit.com/r/(?P<subreddit>\w+)/comments/\w+/\w+/\w+)', re.IGNORECASE)
 ALLOWED_SUBREDDITS = (
    'Christianity',
    'Sidehugs'

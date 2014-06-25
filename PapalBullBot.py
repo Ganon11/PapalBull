@@ -11,7 +11,8 @@ ALLOWED_SUBREDDITS = (
    'Christianity',
    'Sidehugs'
 )
-PAPAL_BULL_MESSAGE = "[papal bull](http://imgur.com/dZBlaTj.gif)"
+COMMENT_MESSAGE = "What this comment needs is a nice, old fashioned, [papal bull](http://imgur.com/dZBlaTj.gif)."
+THREAD_MESSAGE = "What this thread needs is a nice, old fashioned, [papal bull](http://imgur.com/dZBlaTj.gif)."
 USER_AGENT = ("Papal Bull Bot Account by /u/Ganon11 github.com/Ganon11/PapalBull")
 
 def GetPassword():
@@ -34,12 +35,12 @@ def CheckMessages():
          whole_url = m.group(0)
          sub = m.group('subreddit')
          if sub in ALLOWED_SUBREDDITS:
-            r.get_submission(whole_url).comments[0].reply(PAPAL_BULL_MESSAGE)
+            r.get_submission(whole_url).comments[0].reply(COMMENT_MESSAGE)
       elif m2 is not None:
          whole_url = m2.group(0)
          sub = m2.group('subreddit')
          if sub in ALLOWED_SUBREDDITS:
-            r.get_submission(whole_url).add_comment(PAPAL_BULL_MESSAGE)
+            r.get_submission(whole_url).add_comment(THREAD_MESSAGE)
 
 def DoLoop():
    while True:

@@ -16,7 +16,6 @@ THREAD_MESSAGE = "What this thread needs is a nice, old fashioned, [papal bull](
 USER_AGENT = ("Papal Bull Bot Account by /u/Ganon11 github.com/Ganon11/PapalBull")
 
 def GetPassword():
-   password = ''
    PASSWORD_FILE = open(PASSWORD_FILEPATH)
    password = PASSWORD_FILE.read()
    PASSWORD_FILE.close()

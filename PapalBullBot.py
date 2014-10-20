@@ -1,5 +1,6 @@
 import os
 import praw
+import random
 import re
 import time
 
@@ -11,9 +12,14 @@ ALLOWED_SUBREDDITS = (
    'Christianity',
    'Sidehugs'
 )
-COMMENT_MESSAGE = "What this comment needs is a nice, old fashioned, [papal bull](http://imgur.com/dZBlaTj.gif)."
-THREAD_MESSAGE = "What this thread needs is a nice, old fashioned, [papal bull](http://imgur.com/dZBlaTj.gif)."
+COMMENT_MESSAGE = "What this comment needs is a nice, old fashioned, [papal bull](%s)."
+THREAD_MESSAGE = "What this thread needs is a nice, old fashioned, [papal bull](%s)."
 USER_AGENT = ("Papal Bull Bot Account by /u/Ganon11 github.com/Ganon11/PapalBull")
+BULLS = [
+   "http://imgur.com/dZBlaTj.gif",
+   "http://i.imgur.com/yEfaO0C.png",
+   "http://fc07.deviantart.net/fs70/i/2013/053/b/1/papal_bull_by_poundcakery-d5vtv5v.jpg"
+]
 
 def GetPassword():
    PASSWORD_FILE = open(PASSWORD_FILEPATH)
@@ -34,12 +40,12 @@ def CheckMessages():
          whole_url = m.group(0)
          sub = m.group('subreddit')
          if sub in ALLOWED_SUBREDDITS:
-            r.get_submission(whole_url).comments[0].reply(COMMENT_MESSAGE)
+            r.get_submission(whole_url).comments[0].reply(COMMENT_MESSAGE % random.choice(BULLS))
       elif m2 is not None:
          whole_url = m2.group(0)
          sub = m2.group('subreddit')
          if sub in ALLOWED_SUBREDDITS:
-            r.get_submission(whole_url).add_comment(THREAD_MESSAGE)
+            r.get_submission(whole_url).add_comment(THREAD_MESSAGE % random.choice(BULLS))
 
 def DoLoop():
    while True:

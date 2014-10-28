@@ -6,8 +6,8 @@ import time
 
 USERNAME = "Papal_Bull"
 PASSWORD_FILEPATH = os.path.join(os.getcwd(), 'files', 'password.dat')
-COMMENT_PATTERN = re.compile(r'^http://www.reddit.com/r/(?P<subreddit>\w+)/comments/\w+/\w+/\w+$', re.IGNORECASE)
-THREAD_PATTERN = re.compile(r'^http://www.reddit.com/r/(?P<subreddit>\w+)/comments/\w+/\w+/$', re.IGNORECASE)
+COMMENT_PATTERN = re.compile(r'^http(?:s)?://www.reddit.com/r/(?P<subreddit>\w+)/comments/\w+/\w+/\w+$', re.IGNORECASE)
+THREAD_PATTERN = re.compile(r'^http(?:s)?://www.reddit.com/r/(?P<subreddit>\w+)/comments/\w+/\w+/$', re.IGNORECASE)
 ALLOWED_SUBREDDITS = (
    'Christianity',
    'Sidehugs'
@@ -33,9 +33,9 @@ def CheckMessages():
    r.login(USERNAME, password)
 
    for msg in r.get_unread(limit=None):
+      print "%s - read message \"%s\"" % (time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()), msg.body)
       m = re.match(COMMENT_PATTERN, msg.body)
       m2 = re.match(THREAD_PATTERN, msg.body)
-      msg.mark_as_read()
       if m is not None:
          whole_url = m.group(0)
          sub = m.group('subreddit')
@@ -46,6 +46,8 @@ def CheckMessages():
          sub = m2.group('subreddit')
          if sub in ALLOWED_SUBREDDITS:
             r.get_submission(whole_url).add_comment(THREAD_MESSAGE % random.choice(BULLS))
+
+      msg.mark_as_read()
 
 def DoLoop():
    while True:

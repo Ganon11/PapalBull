@@ -14,7 +14,7 @@ ALLOWED_SUBREDDITS = (
 )
 COMMENT_MESSAGE = "What this comment needs is a nice, old fashioned, [papal bull](%s)."
 THREAD_MESSAGE = "What this thread needs is a nice, old fashioned, [papal bull](%s)."
-USER_AGENT = ("Papal Bull Bot Account by /u/Ganon11 github.com/Ganon11/PapalBull")
+USER_AGENT = ("Papal Bull Account by /u/Ganon11 github.com/Ganon11/PapalBull")
 BULLS = [
    "http://imgur.com/dZBlaTj.gif",
    "http://i.imgur.com/yEfaO0C.png",
